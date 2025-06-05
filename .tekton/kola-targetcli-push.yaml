@@ -23,7 +23,7 @@ spec:
   - name: revision
     value: '{{revision}}'
   - name: output-image
-    value: quay.io/konflux-fedora/jcapitao-redhat-com-tenant/coreos-tenant/kola-targetcli:{{revision}}
+    value: quay.io/konflux-fedora/jcapitao-redhat-com-tenant/kola-targetcli:{{revision}}
   - name: build-platforms
     value:
     - linux/x86_64
