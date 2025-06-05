@@ -9,7 +9,11 @@ metadata:
     pipelinesascode.tekton.dev/cancel-in-progress: "true"
     pipelinesascode.tekton.dev/max-keep-runs: "3"
     pipelinesascode.tekton.dev/on-cel-expression: event == "pull_request" && target_branch
-      == "konflux" && ( "tests/containers/tang/***".pathChanged() || ".tekton/kola-tang-pull-request.yaml".pathChanged())
+      == "konflux" &&
+      ("tests/containers/tang/***".pathChanged() ||
+       ".tekton/kola-tang-pull-request.yaml".pathChanged() ||
+       "rpms.lock.yaml".pathChanged()
+      ) && 1 == 0
   creationTimestamp: null
   labels:
     appstudio.openshift.io/application: coreos-assembler
@@ -34,6 +38,10 @@ spec:
     value: Containerfile
   - name: path-context
     value: tests/containers/tang
+  - name: hermetic
+    value: true
+  - name: prefetch-input
+    value: '[{"type": "rpm", "path": "ci/hermetic"}]'
   pipelineSpec:
     description: |
       This pipeline is ideal for building multi-arch container images from a Containerfile while maintaining trust after pipeline customization.
@@ -192,6 +200,8 @@ spec:
         value: $(params.output-image).prefetch
       - name: ociArtifactExpiresAfter
         value: $(params.image-expires-after)
+      - name: dev-package-managers
+        value: "true"
       runAfter:
       - clone-repository
       taskRef:
