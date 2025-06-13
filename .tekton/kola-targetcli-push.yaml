@@ -8,7 +8,10 @@ metadata:
     pipelinesascode.tekton.dev/cancel-in-progress: "false"
     pipelinesascode.tekton.dev/max-keep-runs: "3"
     pipelinesascode.tekton.dev/on-cel-expression: event == "push" && target_branch
-      == "konflux" && "tests/containers/targetcli/***".pathChanged()
+      == "konflux" &&
+      ("tests/containers/targetcli/***".pathChanged() ||
+       "rpms.lock.yaml".pathChanged()
+      )
   creationTimestamp: null
   labels:
     appstudio.openshift.io/application: coreos-assembler
@@ -31,6 +34,10 @@ spec:
     value: Containerfile
   - name: path-context
     value: tests/containers/targetcli
+  - name: hermetic
+    value: false
+  #- name: prefetch-input
+  #  value: '[{"type": "rpm", "path": "."}]'
   pipelineSpec:
     description: |
       This pipeline is ideal for building multi-arch container images from a Containerfile while maintaining trust after pipeline customization.
@@ -189,6 +196,8 @@ spec:
         value: $(params.output-image).prefetch
       - name: ociArtifactExpiresAfter
         value: $(params.image-expires-after)
+      - name: dev-package-managers
+        value: "true"
       runAfter:
       - clone-repository
       taskRef:
