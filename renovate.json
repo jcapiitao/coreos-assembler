@@ -1,0 +1,71 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "baseBranches": ["main"],
+  "branchPrefix": "renovate/",
+  "automergeType": "pr",
+  "prHourlyLimit": 0,
+  "ignorePaths": [
+    "vendor/**"
+  ],
+  "branchConcurrentLimit": 0,
+  "logLevelRemap": [
+    {
+      "matchMessage": "/^Custom manager fetcher/",
+      "newLogLevel": "info"
+    }
+  ],
+  "packageRules": [
+    {
+      "matchDatasources": ["go"],
+      "enabled": false,
+      "description": "Disable updates for Go modules"
+    },
+    {
+      "matchDatasources": ["golang-version"],
+      "enabled": false,
+      "description": "Disable updates for Go modules"
+    },
+    {
+      "matchDatasources": ["docker"],
+      "matchDepNames": ["quay.io/fedora/fedora"],
+      "enabled": false
+    },
+    {
+      "matchDatasources": ["custom.oc"],
+      "extractVersion": "openshift-client-linux-(?<version>.+)\\.tar\\.gz"
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Update Fedora base image based on endoflife-date",
+      "fileMatch": [
+        "Dockerfile",
+        "Containerfile"
+      ],
+      "matchStrings": [
+        "quay.io/fedora/fedora:(?<currentValue>.*)"
+      ],
+      "versioningTemplate": "loose",
+      "datasourceTemplate": "endoflife-date",
+      "depNameTemplate": "fedora"
+    },
+    {
+      "customType": "regex",
+      "datasourceTemplate": "custom.oc",
+      "fileMatch": ["artifacts.lock.yaml"],
+      "depNameTemplate": "openshift-client",
+      "versioningTemplate": "semver",
+      "matchStrings": [
+        "- download_url:.*openshift-client-linux-(?<currentValue>.*)\.tar\.gz",
+        "- download_url:.*ocp/(?<currentValue>.*)/openshift-client-linux.*"
+      ]
+    }
+  ],
+  "customDatasources": {
+    "oc": {
+      "defaultRegistryUrlTemplate": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/sha256sum.txt",
+      "format": "plain"
+    }
+  }
+}
