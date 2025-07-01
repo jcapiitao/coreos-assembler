@@ -1,0 +1,47 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "packageRules": [
+    {
+      "matchDatasources": ["ocp-client-latest"]
+    },
+    {
+      "matchDatasources": ["go"],
+      "enabled": false,
+      "description": "Disable updates for Go modules"
+    },
+    {
+      "matchDatasources": ["golang-version"],
+      "enabled": false,
+      "description": "Disable updates for Go modules"
+    },
+    {
+      "matchDatasources": ["python-version"],
+      "enabled": false,
+      "description": "Disable updates for Go modules"
+    },
+    {
+      "matchDatasources": ["docker"],
+      "ignorePaths": [
+        "vendor/**"
+      ]
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "datasourceTemplate": "custom.ocp",
+      "lookupNameTemplate": "openshift-client-4.19",
+      "depNameTemplate": "ocp",
+      "fileMatch": ["test"],
+      "matchStrings": [
+        "OCP_CLIENT_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+      ]
+    }
+  ],
+  "customDatasources": {
+    "ocp": {
+      "defaultRegistryUrlTemplate": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.19/sha256sum.txt",
+      "format": "plain"
+    }
+  }
+}
