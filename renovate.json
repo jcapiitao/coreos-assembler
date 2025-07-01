@@ -3,24 +3,30 @@
   "extends": [
     "github>platform-engineering-org/.github"
   ],
-  "dependencyDashboard": "false",
+  "dependencyDashboard": false,
   "packageRules": [
     {
-      "matchDatasources": ["repology"],
+      "matchDatasources": [
+        "repology"
+      ],
       "versioning": "rpm"
     },
     {
       "description": "Disable updates for Golang dependencies",
-      "matchManagers": ["gomod"],
+      "matchManagers": [
+        "gomod"
+      ],
       "enabled": false
     }
   ],
   "customManagers": [
     {
-      "customType": ["regex"],
-      "fileMatch": ["^rpms.lock.yaml$"],
+      "customType": "regex",
+      "fileMatch": [
+        "^rpms.lock.yaml$"
+      ],
       "matchStrings": [
-	"\"name\":\\s*\"(?<packageName>[^\"]+)\",\\s*\"evr\":\\s*\"(?<currentValue>[^\"]+)\",\\s*\"repoid\":\\s*\"(?<repo>[^\"]+)\""
+        "\"name\":\\s*\"(?<packageName>[^\"]+)\",\\s*\"evr\":\\s*\"(?<currentValue>[^\"]+)\",\\s*\"repoid\":\\s*\"(?<repo>[^\"]+)\""
       ],
       "depNameTemplate": "{{{repo}}}/{{{packageName}}}",
       "datasourceTemplate": "repology",
