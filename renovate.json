@@ -1,0 +1,67 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "baseBranches": ["main"],
+  "branchPrefix": "renovate/",
+  "automergeType": "branch",
+  "prHourlyLimit": 0,
+  "ignorePaths": [
+    "vendor/**"
+  ],
+  "branchConcurrentLimit": 0,
+  "logLevelRemap": [
+    {
+      "matchMessage": "/^Custom manager fetcher/",
+      "newLogLevel": "info"
+    }
+  ],
+  "packageRules": [
+    {
+      "matchDatasources": ["go"],
+      "enabled": false,
+      "description": "Disable updates for Go modules"
+    },
+    {
+      "matchDatasources": ["golang-version"],
+      "enabled": false,
+      "description": "Disable updates for Go modules"
+    },
+    {
+      "matchManagers": ["rpm"],
+      "matchBaseBranches": ["main"],
+      "groupName": "RPM Updates",
+      "commitMessageTopic": "RPM updates",
+      "enabled": true,
+      "schedule": [
+        "at any time"
+      ],
+      "branchPrefix": "renovate/rpm/",
+      "semanticCommits": "enabled",
+      "automerge": "true"
+    }
+  ],
+  "rpm": {
+    "schedule": [
+      "at any time"
+    ]
+  },
+  "customManagers": [
+    {
+      "customType": "regex",
+      "datasourceTemplate": "custom.ocp",
+      "depNameTemplate": "openshift-client",
+      "fileMatch": ["test"],
+      "matchStrings": [
+        "OCP_CLIENT_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+      ]
+    }
+  ],
+  "customDatasources": {
+    "ocp": {
+      "defaultRegistryUrlTemplate": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.19/sha256sum.txt",
+      "transformTemplates": [
+         "{\"releases\":[{\"version\": $$.(data.releases[version ~> /openshift-client-linux-[0-9]*\.[0-9]*\.[0-9]*\.tar\.gz/].version.($match(/openshift-client-linux-(.*)\.tar\.gz/).groups[0])), \"digest\": $$.(data.releases[version ~> /openshift-client-linux-[0-9]*\.[0-9]*\.[0-9]*\.tar\.gz/].version ~> $substringBefore(' '))}]}"
+       ],
+      "format": "plain"
+    }
+  }
+}
