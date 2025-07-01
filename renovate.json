@@ -1,0 +1,35 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "ignorePaths": [
+    "vendor/**"
+  ],
+  "logLevelRemap": [
+    {
+      "matchMessage": "/^Custom manager fetcher/",
+      "newLogLevel": "info"
+    }
+  ],
+  "packageRules": [
+    {
+      "matchDatasources": ["ocp-client-latest"]
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "datasourceTemplate": "custom.ocp",
+      "lookupNameTemplate": "openshift-client-4.19",
+      "depNameTemplate": "ocp",
+      "fileMatch": ["test"],
+      "matchStrings": [
+        "OCP_CLIENT_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+      ]
+    }
+  ],
+  "customDatasources": {
+    "ocp": {
+      "defaultRegistryUrlTemplate": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.19/sha256sum.txt",
+      "format": "plain"
+    }
+  }
+}
