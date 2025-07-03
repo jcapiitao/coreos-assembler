@@ -12,7 +12,7 @@ require (
 	github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/resources/armresources v1.2.0
 	github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/storage/armstorage v1.7.0
 	github.com/Azure/azure-sdk-for-go/sdk/storage/azblob v1.6.0
-	github.com/IBM-Cloud/bluemix-go v0.0.0-20250324085928-caa6511f0c13
+	github.com/IBM-Cloud/bluemix-go v0.0.0-20250618042132-471bd83e0b74
 	github.com/IBM/ibm-cos-sdk-go v1.12.2
 	github.com/aliyun/alibaba-cloud-sdk-go v1.63.101
 	github.com/aliyun/aliyun-oss-go-sdk v3.0.2+incompatible
@@ -48,7 +48,7 @@ require (
 	github.com/vmware/govmomi v0.49.0
 	github.com/xeipuuv/gojsonschema v1.2.0
 	golang.org/x/crypto v0.36.0
-	golang.org/x/net v0.37.0
+	golang.org/x/net v0.38.0
 	golang.org/x/oauth2 v0.28.0
 	golang.org/x/term v0.30.0
 	google.golang.org/api v0.228.0
