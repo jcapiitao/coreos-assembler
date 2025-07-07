@@ -2,7 +2,7 @@ metadata:
   version: '1.0'
 artifacts:
   # renovate: datasource=ocp_latest_4_19 depName=latest-4.19 versioning=loose
-  - download_url: 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/openshift-client-linux-4.19.1.tar.gz'
+  - download_url: 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/openshift-client-linux-100.tar.gz'
     checksum: 'sha256:15f15ebee019649cf79261a9dfe52ab1be84b081b7f98643b690c4d647191001'
     filename: 'openshift-client-linux-x86_64.tar.gz'
   - download_url: 'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/latest/openshift-client-linux.tar.gz'
