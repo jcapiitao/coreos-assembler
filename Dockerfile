@@ -1,6 +1,6 @@
 # When rebasing to new Fedora, also update openshift/release:
 # https://github.com/openshift/release/tree/master/ci-operator/config/coreos/coreos-assembler/coreos-coreos-assembler-main.yaml
-FROM quay.io/fedora/fedora:41 # renovate: datasource=endoflife-date depName=fedora versioning=docker
+FROM quay.io/fedora/fedora:42 # renovate: datasource=endoflife-date depName=fedora versioning=docker
 WORKDIR /root/containerbuild
 # This variable is enabled by Konflux to build the container image hermatically.
 ARG NO_NETWORK=0
