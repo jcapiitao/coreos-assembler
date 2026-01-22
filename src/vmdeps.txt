@@ -51,3 +51,6 @@ python3-dateutil
 
 # To have the locales available for grub to install
 filesystem
+
+# for bootc install to write TOML config file
+python3-tomli-w

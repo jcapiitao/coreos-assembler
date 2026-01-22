@@ -320,6 +320,16 @@ pipelines:
             partition:
               mpp-format-int: '{image.layout[''boot''].partnum}'
             target: /boot
+     # Configure ostree to set bls-append-except-default for GRUB
+     # See https://github.com/bootc-dev/bootc/pull/1909
+      - type: org.osbuild.bootc.install.config
+        options:
+          filename: 10-ostree.toml
+          use-buildroot: true
+          config:
+            install:
+              ostree:
+                bls-append-except-default: 'grub_users=""'
       # Use bootc install to-filesystem to install the ostree content from the container image
       # inside our disc image
       - type: org.osbuild.bootc.install-to-filesystem
@@ -590,6 +600,16 @@ pipelines:
             partition:
               mpp-format-int: '{image.layout[''boot''].partnum}'
             target: /boot
+     # Configure ostree to set bls-append-except-default for GRUB
+     # See https://github.com/bootc-dev/bootc/pull/1909
+      - type: org.osbuild.bootc.install.config
+        options:
+          filename: 10-ostree.toml
+          use-buildroot: true
+          config:
+            install:
+              ostree:
+                bls-append-except-default: 'grub_users=""'
       # Use bootc install to-filesystem to install the ostree content from the container image
       # inside our disc image
       - type: org.osbuild.bootc.install-to-filesystem
